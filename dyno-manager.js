@@ -18,8 +18,14 @@ const hasDuplicates = (array) => {
     return (new Set(array)).size !== array.length;
 }
 
+const showDuplicates = (array) => {
+    return array.filter((item, index) => array.indexOf(item) !== index)
+}
+
 if (hasDuplicates(controlNumbers)) {
     log('Tem control numbers duplicados 😱')
+    log('Mostrando control numbers duplicados:')
+    log(showDuplicates(controlNumbers))
     process.exit(1)
 }
 
