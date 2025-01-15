@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# I was having the same issue with gnome on Fedora. Two title bars. Of course, the suggested solution for reverting to native title bar worked for me, 
+# I kinda liked the custom titlebar from the vscodium that I am using on the side.
+
+# Since I know that it’s electron app, there has to be just a single parameter change either in some JSON or JS file. 
+# So I extracted the AppImage file.
+
 # Get the appimagetool appimage from the releases page here: https://github.com/AppImage/appimagetool
 
 # Step 1: Extract the AppImage
