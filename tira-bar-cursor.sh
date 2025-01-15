@@ -9,7 +9,7 @@
 # Get the appimagetool appimage from the releases page here: https://github.com/AppImage/appimagetool
 
 # Step 1: Extract the AppImage
-./Cursor.AppImage --appimage-extract
+./cursor-0.44.11x86_64.AppImage --appimage-extract
 
 # Step 2: Define the path to the target file
 TARGET_FILE="squashfs-root/resources/app/out/vs/code/electron-main/main.js"
