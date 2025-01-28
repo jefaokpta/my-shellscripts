@@ -1,21 +1,26 @@
 #!/bin/bash
+set -ex
 
-# I was having the same issue with gnome on Fedora. Two title bars. Of course, the suggested solution for reverting to native title bar worked for me, 
-# I kinda liked the custom titlebar from the vscodium that I am using on the side.
+# Download Cursor IDE
+wget https://downloader.cursor.sh/linux/appImage/x64 -O ./Cursor_orig.AppImage
+chmod +x ./Cursor_orig.AppImage
 
-# Since I know that it’s electron app, there has to be just a single parameter change either in some JSON or JS file. 
-# So I extracted the AppImage file.
+# Extract the AppImage
+./Cursor_orig.AppImage --appimage-extract
+rm ./Cursor_orig.AppImage
 
-# Get the appimagetool appimage from the releases page here: https://github.com/AppImage/appimagetool
+# Fix it by replacing all occurrences of ",minHeight" with ",frame:false,minHeight"
+find squashfs-root/ -type f -name '*.js' \
+  -exec grep -l ,minHeight {} \; \
+  -exec sed -i 's/,minHeight/,frame:false,minHeight/g' {} \;
 
-# Step 1: Extract the AppImage
-./cursor.appimage --appimage-extract
+# Download appimagetool
+wget https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-x86_64.AppImage -O ./appimagetool-x86_64.AppImage
+chmod +x ./appimagetool-x86_64.AppImage
 
-# Step 2: Define the path to the target file
-TARGET_FILE="squashfs-root/resources/app/out/vs/code/electron-main/main.js"
-
-# Step 3: Replace all occurrences of ",minHeight" with ",frame:false,minHeight"
-sed -i 's/,minHeight/,frame:false,minHeight/g' "$TARGET_FILE"
-
-# Step 4: Repackage the AppImage using appimagetool
+# Repackage the AppImage using appimagetool
 ./appimagetool-x86_64.AppImage squashfs-root/
+
+# Cleaning Up
+rm ./appimagetool-x86_64.AppImage
+rm -rf squashfs-root/
