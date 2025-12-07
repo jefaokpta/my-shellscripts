@@ -30,3 +30,18 @@ sudo btrfs send $montagemLocal/timeshift/snapshots/${nomeSnapshot}_ro | sudo btr
 ## Desmontando HD local
 echo "🔌 Desmontando HD local..."
 sudo umount /mnt
+
+echo "✅ Backup do snapshot $nomeSnapshot concluído!"
+
+## Fim do script
+## pra restaurar o snapshot, usar o comando:
+## sudo btrfs send /run/media/jefaokpta/TIMESHIFT/@ | sudo btrfs receive /mnt/timeshift/snapshots
+## Caso va restaurar snapshot em uma nova instalação:
+## Atualize todo o sistema com: sudo dnf upgrade -y
+## iniciar o sistema em modo live com pendrive bootável
+## substituir o /etc/fstab do snapshot no hd externo com o da nova instalação
+## substituir o /boot/efi do snapshot no hd externo com o da nova instalação
+## substituir o /boot/grub2 do snapshot no hd externo com o da nova instalação
+## substituir o /boot/loader do snapshot no hd externo com o da nova instalaçao
+## finalmente substituir o @ da instalação nova com o snapshot copiado no hd externo
+## depois reiniciar o sistema
