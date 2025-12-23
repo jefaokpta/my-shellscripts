@@ -13,7 +13,7 @@ fi
 
 ## Montar subvolumes do BTRFS
 echo "🔧 Montando HD local..."
-sudo mount -o subvolid=5 $hdLocal $montagemLocal
+mount -o subvolid=5 $hdLocal $montagemLocal
 MOUNT_EXIT_CODE=$?
 if [ $MOUNT_EXIT_CODE -ne 0 ]; then
     echo "❌ Montagem falhou"
@@ -22,7 +22,7 @@ fi
 
 ## Criando snapshot read only
 echo "📦 Criando snapshot read only..."
-sudo btrfs subvolume snapshot -r $montagemLocal/timeshift-btrfs/snapshots/$nomeSnapshot/@ $montagemLocal/timeshift-btrfs/snapshots/${nomeSnapshot}_ro
+btrfs subvolume snapshot -r $montagemLocal/timeshift-btrfs/snapshots/$nomeSnapshot/@ $montagemLocal/timeshift-btrfs/snapshots/${nomeSnapshot}_ro
 MKSNAP_EXIT_CODE=$?
 if [ $MKSNAP_EXIT_CODE -ne 0 ]; then
     echo "❌ Criação do snapshot read only falhou"
@@ -31,11 +31,11 @@ fi
 
 ## Sincronizando dados BTRFS
 echo "⚡ Sincronizando dados..."
-sudo sync
+sync
 
 ## Copiando snapshot para HD externo
 echo "🚚 Copiando snapshot para HD externo..."
-sudo btrfs send $montagemLocal/timeshift-btrfs/snapshots/${nomeSnapshot}_ro | sudo btrfs receive $hdExterno
+btrfs send $montagemLocal/timeshift-btrfs/snapshots/${nomeSnapshot}_ro | btrfs receive $hdExterno
 COPY_EXIT_CODE=$?
 if [ $COPY_EXIT_CODE -ne 0 ]; then
     echo "❌ Cópia do snapshot falhou"
@@ -44,7 +44,7 @@ fi
 
 ## Desmontando HD local
 echo "🔌 Desmontando HD local..."
-sudo umount /mnt
+umount /mnt
 
 echo "✅ Backup do snapshot $nomeSnapshot concluído!"
 
