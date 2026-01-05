@@ -1,6 +1,6 @@
 #!/bin/bash
 
-hdLocal="/dev/nvme0n1p2"
+hdLocal="/dev/sda2"
 hdExterno="/run/media/jefaokpta/TIMESHIFT"
 montagemLocal="/mnt"
 
