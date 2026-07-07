@@ -26,13 +26,11 @@ fi
   
   sleep 0.1
 
-  # Executa a aplicação ResetCDR especificamente no Canal A
-  # Nota: 'Action: Exec' pode exigir o módulo res_manager_exec.so.
-  # Se falhar, use 'Action: AGI' com 'Command: EXEC ResetCDR v'.
-  printf "Action: Exec\r\n"
+  # Executa a aplicação ResetCDR especificamente no Canal A via AGI
+  # Esta é a alternativa padrão quando o 'Action: Exec' não está disponível
+  printf "Action: AGI\r\n"
   printf "Channel: %s\r\n" "$CANAL_A"
-  printf "Application: ResetCDR\r\n"
-  printf "Options: v\r\n"
+  printf "Command: EXEC ResetCDR v\r\n"
   printf "\r\n"
   
   sleep 0.1
