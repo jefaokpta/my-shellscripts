@@ -26,11 +26,11 @@ fi
   
   sleep 0.1
 
-  # Executa a aplicação ResetCDR especificamente no Canal A via AGI
-  # Esta é a alternativa padrão quando o 'Action: Exec' não está disponível
-  printf "Action: AGI\r\n"
-  printf "Channel: %s\r\n" "$CANAL_A"
-  printf "Command: EXEC ResetCDR v\r\n"
+  # Executa a aplicação ResetCDR especificamente no Canal A via comando CLI
+  # O comando 'dialplan exec' permite rodar aplicações em canais ativos sem AsyncAGI
+  # Certifique-se que o usuário AMI tenha permissão 'command' no manager.conf
+  printf "Action: Command\r\n"
+  printf "Command: dialplan exec %s ResetCDR v\r\n" "$CANAL_A"
   printf "\r\n"
   
   sleep 0.1
